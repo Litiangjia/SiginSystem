@@ -1,0 +1,407 @@
+  // 基础变量
+  @dialog-bg-color: #fff;
+  @dialog-border-color: #ccc;
+  @dialog-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  @dialog-padding: 20px;
+  @dialog-radius: 4px;
+  @dialog-title-color: #333;
+  @dialog-text-color: #666;
+
+  // Dialog 主题变量定义
+  // info theme
+  @info-primary-color: #4CAF50;
+  @info-bg-color: #E8F5E9;
+  @info-border-color: #A5D6A7;
+  @info-text-color: #2E7D32;
+  @info-icon-color: #66BB6A;
+  @info-icon: "ℹ️";
+
+  // error theme
+  @error-primary-color: #f44336;
+  @error-bg-color: #FFEBEE;
+  @error-border-color: #EF9A9A;
+  @error-text-color: #B71C1C;
+  @error-icon-color: #EF5350;
+  @error-icon: "⚠️";
+
+  // success theme
+  @success-primary-color: #2196F3;        // 原为 #4CAF50
+  @success-bg-color: #E3F2FD;             // 原为 #E8F5E9
+  @success-border-color: #90CAF9;         // 原为 #A5D6A7
+  @success-text-color: #0D47A1;           // 原为 #1B5E20
+  @success-icon-color: #42A5F5;           // 原为 #66BB6A
+  @success-icon: "✅";
+
+
+  // warning theme
+  @warning-primary-color: #FF9800;
+  @warning-bg-color: #FFF3E0;
+  @warning-border-color: #FFCC80;
+  @warning-text-color: #E65100;
+  @warning-icon-color: #FFA726;
+  @warning-icon: "⚠️";
+
+  // 通用 dialog mixin
+  .dialog-base() {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);//
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    padding: 25px;
+    width: 320px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    z-index: 1000;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      border-radius: 8px 8px 0 0;
+    }
+
+    &__title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+
+      &::before {
+        margin-right: 10px;
+        font-size: 24px;
+      }
+    }
+
+    &__content {
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 25px;
+      font-family: 'Microsoft YaHei', Arial, sans-serif;
+    }
+
+    &__actions {
+      display: flex;
+      justify-content: center;
+
+      button {
+        padding: 12px 25px;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+
+        &:hover {
+          transform: translateY(-2px);
+        }
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+  }
+
+  // 主题样式 mixin
+  .theme-dialog(@primary-color, @bg-color, @border-color, @text-color, @icon) {
+    background-color: @bg-color;
+    border: 2px solid @border-color;
+    box-shadow: 0 4px 15px rgba(red(@primary-color), green(@primary-color), blue(@primary-color), 0.2);
+
+    &::before {
+      background: linear-gradient(90deg, @primary-color, lighten(@primary-color, 15%), @primary-color);
+    }
+
+    &__title {
+      color: @text-color;
+
+      &::before {
+        content: @icon;
+      }
+    }
+
+    &__content {
+      color: darken(@text-color, 10%);
+    }
+
+    &__actions {
+      button {
+        background-color: @primary-color;
+        box-shadow: 0 2px 5px rgba(red(@primary-color), green(@primary-color), blue(@primary-color), 0.3);
+
+        &:hover {
+          background-color: darken(@primary-color, 10%);
+          box-shadow: 0 4px 8px rgba(red(@primary-color), green(@primary-color), blue(@primary-color), 0.4);
+        }
+
+        &:focus {
+          box-shadow: 0 0 0 3px rgba(red(@primary-color), green(@primary-color), blue(@primary-color), 0.3);
+        }
+      }
+    }
+  }
+
+      // 替换原有的 .generate-animation mixin 和调用
+
+    @keyframes infoFadeIn {
+      0% {
+        opacity: 0;
+        transform: translate(0%, -100%) scale(0.7) rotate(-10deg);
+      }
+      25% {
+        opacity: 0.25;
+        transform: translate(0%, -75%) scale(1.05) rotate(10deg);
+      }
+
+      50% {
+        opacity: 0.5;
+        transform: translate(0%, -50%) scale(1.1) rotate(-5deg);
+      }
+      75% {
+        opacity: 0.75;
+        transform: translate(0%, -25%) scale(1.05) rotate(5deg);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0%, 0%) scale(1) rotate(0deg);
+      }
+    }
+
+    @keyframes infoFadeOut {
+      0% {
+        opacity: 1;
+      }
+      50% {
+       opacity: 0.5;
+       top: -50%;
+      }
+      100% {
+        opacity: 0;
+        top:-100%;
+        //transform: translate(0% 0%) scale(0.8) rotate(2deg);
+      }
+    }
+
+    @keyframes errorFadeIn {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.7) rotate(-2deg);
+      }
+      50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.05) rotate(1deg);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+      }
+    }
+
+    @keyframes errorFadeOut {
+      from {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      to {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8) rotate(2deg);
+      }
+    }
+
+    @keyframes successFadeIn {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.7) rotate(-2deg);
+      }
+      50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.05) rotate(1deg);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+      }
+    }
+
+    @keyframes successFadeOut {
+      from {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      to {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8) rotate(2deg);
+      }
+    }
+
+    @keyframes warningFadeIn {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.7) rotate(-2deg);
+      }
+      50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.05) rotate(1deg);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+      }
+    }
+
+    @keyframes warningFadeOut {
+      from {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      to {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8) rotate(2deg);
+      }
+    }
+
+
+  // 生成不同主题的 dialog
+  .infoDialog {
+    .dialog-base();
+    transform: translate(0%,0%);
+    top: 0;
+    left:0;
+    width: 100%;
+    height: auto;
+    .theme-dialog(@info-primary-color, @info-bg-color, @info-border-color, @info-text-color, @info-icon);
+    animation: infoFadeIn 0.4s ease-out;
+  }
+
+  .close__infoDialog {
+    animation: infoFadeOut 1s ease-in forwards;
+  }
+
+  .errorDialog {
+    .dialog-base();
+    .theme-dialog(@error-primary-color, @error-bg-color, @error-border-color, @error-text-color, @error-icon);
+    animation: errorFadeIn 0.4s ease-out;
+  }
+
+  .close__errorDialog {
+    animation: errorFadeOut 0.3s ease-in forwards;
+  }
+
+  .successDialog {
+   .dialog-base();
+    .theme-dialog(@success-primary-color, @success-bg-color, @success-border-color, @success-text-color, @success-icon);
+    animation: successFadeIn 0.4s ease-out;
+  }
+
+  .close__successDialog {
+    animation: successFadeOut 0.3s ease-in forwards;
+  }
+
+  .warningDialog {
+    .dialog-base();
+    .theme-dialog(@warning-primary-color, @warning-bg-color, @warning-border-color, @warning-text-color, @warning-icon);
+    animation: warningFadeIn 0.4s ease-out;
+  }
+
+  .close__warningDialog {
+    animation: warningFadeOut 0.3s ease-in forwards;
+  }
+
+  // 默认 dialog 样式（保持原有）
+  .dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: @dialog-bg-color;
+    border: 1px solid @dialog-border-color;
+    box-shadow: @dialog-shadow;
+    padding: @dialog-padding;
+    width: 300px;
+    box-sizing: border-box;
+    border-radius: @dialog-radius;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-out;
+
+    &__title {
+      font-size: 18px;
+      font-weight: bold;
+      color: @dialog-title-color;
+      margin-bottom: 10px;
+    }
+
+    &__content {
+      font-size: 14px;
+      color: @dialog-text-color;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    &__actions {
+      display: flex;
+      justify-content: flex-end;
+
+      button {
+        margin-left: 10px;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #0056b3;
+        }
+
+        &:focus {
+          outline: none;
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+      }
+    }
+  }
+
+  .close__dialog {
+    animation: fadeOut 0.3s ease-in forwards;
+  }
+
+  // 基础动画（保持原有）
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.9);
+    }
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.3);
+    }
+    40% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+    60% {
+      transform: translate(-50%, -50%) scale(0.95);
+    }
+    80% {
+      transform: translate(-50%, -50%) scale(1.02);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }

@@ -1,0 +1,135 @@
+.left-nav{
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  opacity: 1;
+}
+.left-nav-ul{
+  list-style: none;;
+  padding: 0 0.5rem;
+  margin: 0;
+}
+.left-nav-li{
+  padding: 1em 1em;
+  margin-bottom: 0.5em;
+  background: linear-gradient(135deg, #e2e2e2 0%, #a7d5f0 100%);
+  box-sizing: border-box;
+  border-radius:10px;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.left-nav-li:hover{
+  background: linear-gradient(135deg, #626262 0%, #39baff 100%);
+  color: white;
+}
+.left-nav-header {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.5em;
+  // 新增样式
+  padding: 1rem;
+  background: linear-gradient(90deg, #ff864a, #ff570f);
+  color: white;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin: 0.5rem;
+  border-left: 4px solid #ff5858;
+}
+
+
+.left-nav-bar{
+  display: none;
+}
+
+.navActive{
+   background: linear-gradient(135deg, #626262 0%, #39baff 100%);
+  color: white;
+}
+
+//手机端
+@media all and (max-width: 576px) {
+    .left-nav-auto{
+      margin-top:3rem;
+    }
+   .left-nav-bar-header {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 0.5em;
+      // 新增样式
+      padding: 1rem;
+     // background: linear-gradient(90deg, #6666ff, #9999ff);
+      color: white;
+      text-align: center;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin: 0.5rem;
+      border-left: 4px solid #ff5858;
+  }
+   .left-nav-header{
+    display: none;
+   }
+
+  .left-nav-container{
+    padding-top:4rem;
+  }
+  .left-nav-bar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top:0;
+    left: 0;
+    z-index: 999;
+    width: 100vw;
+    height: 5rem;
+    background: linear-gradient(135deg, #626262 0%, #39baff 100%);
+    background-color: #2c3e50;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+
+  }
+  .left-nav{
+    width:100vw;
+    display: block;
+    position: fixed;
+    left: 0;
+    top:-100%;
+    height: 100vh;
+    z-index: 1;
+    // 添加半透明背景和模糊效果
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+
+    opacity: 0;
+    overflow-y: scroll;
+    transition:
+      top 0.5s ease,
+      opacity 1s ease-in-out;
+  }
+  .left-nav-ul{
+    padding: 1em;
+  }
+  .left-nav-li{
+    font-size: 1.2em;
+    padding: 1.2em 1em;
+    margin-bottom: 1em;
+    background:none;
+  }
+
+  .navActive{
+    background: linear-gradient(135deg, #626262 0%, #39baff 100%);
+    color: white;
+  }
+
+  .left-nav-li:hover{
+    background: rgb(102, 102, 255);
+    color: white;
+  }
+}
+
+
