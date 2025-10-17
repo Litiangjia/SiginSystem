@@ -1,7 +1,7 @@
 <script lang="ts">
 
 //sdfds
-//sfdsfdsfsdfsdfds
+//藏族自治州
 </script>
 
 <template>
