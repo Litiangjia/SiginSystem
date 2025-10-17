@@ -1,7 +1,7 @@
 <script lang="ts">
 
 //sdfds
-//sfdsfdsfsdfsdfdsfsdfsdfsdfds
+//sfdsfdsfsdfsdfds
 </script>
 
 <template>
