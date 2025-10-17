@@ -1,5 +1,5 @@
 <script lang="ts">
-
+  console.log('AppMain.vue')
 </script>
 
 <template>
