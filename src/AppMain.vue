@@ -1,7 +1,4 @@
 <script lang="ts">
-
-//sdfds
-//藏族自治州
 </script>
 
 <template>

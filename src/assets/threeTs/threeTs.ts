@@ -1,7 +1,7 @@
 
 import { Vector3,PointLight, PointLightHelper,Scene,PerspectiveCamera,WebGLRenderer, DirectionalLight, DirectionalLightHelper, CanvasTexture, Clock, AnimationMixer, type ColorRepresentation, Mesh} from "three";
 
-import { type LoadingManager ,type AnimationClip,type AnimationAction } from "three";
+import { LoadingManager ,type AnimationClip,type AnimationAction } from "three";
 import type { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
@@ -14,9 +14,9 @@ export class Pl extends PointLight{
     constructor(color: ColorRepresentation | undefined,intensity: number | undefined,distance: number,diffusion: number | undefined){
         super(color,intensity,distance,diffusion); //调用父构造类
         // this.color = color;
-        this.intensity =intensity as number;
-        this.distance = distance;
-        this.diffusion = diffusion as number;
+        this.intensity =intensity as number;// 强度
+        this.distance = distance;// 距离
+        this.diffusion = diffusion as number; // 衰减
     }
     //添加辅助光
     addHelper(intensity: number | undefined):Pl{
@@ -48,7 +48,7 @@ export class Dl extends DirectionalLight{
     }
     //添加辅助光
     addHelper(intensity: number | undefined){
-        this.helper = new DirectionalLightHelper(this,intensity);
+        this.helper = new DirectionalLightHelper(this,intensity); //创建辅助光
         return this;
     }
     //开启阴影还回对象
@@ -80,7 +80,7 @@ export class T{   //
 
         console.log(this.renderer);
     }
-
+    //createDirectionalLight 创建方向光
     // 创建文本纹理函数
     createTextTexture(text:string) {//返回纹理图
         const canvas = document.createElement('canvas');
@@ -119,7 +119,7 @@ export class T{   //
         const gradient = context.createLinearGradient(0, 0, 0, canvas.height);
 
         ColorStopArray.forEach((Colors)=>{
-             gradient.addColorStop(Colors[0]as number,Colors[1]as string);   // 起点颜色为红色
+             gradient.addColorStop(Colors[0]as number,Colors[1]as string);   // 起点颜色
         })
         context.fillStyle = gradient;
         context.fillRect(0, 0, canvas.width, canvas.height);
