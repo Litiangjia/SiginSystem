@@ -26,37 +26,48 @@
       progress.value = (itemsLoaded / itemsTotal) * 100;
     };
 
+    scene.background = 0xFF9900; //设置场景颜色
 
-
-    camera.position.set(0,0,20); //设置相机位置
+    camera.position.set(0,0.2,1);  //x,y,z
     camera.lookAt(0,0,0); //设置相机方向
 
     //渲染器渲染,并设置渲染大小
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.render(scene, camera);
     renderer.shadowMap.enabled = true; //开启阴影
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    // renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     //添加一个全局关照
     //const ambientLight = new THREE.AmbientLight(0xffffff,0.5);
     //开启投影
     // scene.add(ambientLight);
+    //创建灯光
+    const light = new THREE.AmbientLight(0x404040,10); //全局关照
+    scene.add(light);
 
     // 灯光
-    const dl = new Dl(0xffffff,5,100,5).addHelper(5);  //创建方向灯并添加辅助光
-    //const pl = new Pl(0xffffff,30000,100000,50).addHelper(5);  //创建点光源并添加辅助光
-    //创建点光源
-    const pl = new THREE.PointLight(0xffffff,30000,100000,50);
+    const dl = new Dl(0xFF9900,5).addHelper(5).openShadow();  //创建方向灯并添加辅助光
+    // dl.shadow.camera.near = 0.1; //距离阴影最近距离
+    // dl.shadow.camera.far = 50; //距离阴影最远距离
+    // dl.shadow.camera.left = -80; //设置阴影范围
+    // dl.shadow.camera.right = 60; //设置阴影范围
+    dl.position.set(-2,0.5,1); //设置位置
+    dl.lookAt(0,0,0);   //设置方
 
-    dl.position.set(60,35,30); //设置方向灯位置
-    dl.lookAt(0,0,0); //设置方向光方向
-    pl.position.set(0,10,20); //
-    pl.lookAt(0,0,0);
-    //添加投影
-    dl.castShadow = true;//开启投影
-    pl.castShadow = true;//开启投影
+    scene.add(dl);
+
+     //点灯光1
+    const pl = new Pl(0x404040,25,4,1).openShadow();  //实现点光源并开启投影
+    pl.position.set(0,0.8,-2);
+    pl.castShadow =true; //点光源开启投影
     scene.add(pl);
-    //scene.add(dl,pl);//添加
-    scene.add(dl.helper,pl.helper) //添加辅助光
+    //点灯光2
+    const pl2 = new Pl(0x404040,25,4,1).openShadow();  //实现点光源并开启投影
+    pl2.position.set(0,0.8,1.6);
+    pl2.castShadow =true; //点光源开启投影
+    scene.add(pl2);
+
+
+
 
     //添加轨道控制器
     const controls = new OrbitControls(camera, renderer.domElement);
@@ -64,37 +75,69 @@
    // controls.dampingFactor = 0.25; //阻尼系数
 
     // 加载模型
-    const texture = t.createLinearTexture([[0,"orange"],[0.18,"orange"],[0.22,"white"],[1,"white"]]);
-    loaderModel("/public/models/001_kebbpo.glb",loader).then((gltf)=>{
+    const texture = t.createLinearTexture([[0,"RGB(0, 206, 209)"],[0.18,"RGB(0, 206, 209)"],[0.22,"white"],[1,"white"]]);
+    loaderModel("/public/models/001.glb",loader).then((gltf)=>{
+      gltf.scene.scale.set(0.1,0.1,0.1); //缩放模型
       //设置材质
       gltf.scene.traverse((child)=>{
-        // if(child.isMesh){
-        //   console.log(child);
+
+        if(child.isMesh){
+          child.castShadow = true; //开启阴影
+           child.receiveShadow = true; //接受投影
+        }
+
+        if(child.isMesh&&child.name === "左墙体"
+          ||child.isMesh&&child.name === "右墙体"
+          ||child.isMesh&&child.name === "正面墙体"
+          ||child.isMesh&&child.name === "后面墙体"
+        ){
+          child.material = new THREE.MeshStandardMaterial({map:texture}); //设置材质颜色
+        }
+
+        if(child.isMesh&&child.name === "右墙体"
+          ||child.isMesh&&child.name === "房顶"
+          ||child.isMesh&&child.name === "正面墙体"
+          ||child.isMesh&&child.name === "后面墙体"
+          ||child.isMesh&&child.name === "平面"
+          ||child.isMesh&&child.name === "黑板-材质6"
+          ||child.isMesh&&child.name === "黑板-材质7"
+          ||child.isMesh&&child.name === "讲台工程"
+          ||child.isMesh&&child.name === "教室台阶"
+        ){
+          child.receiveShadow = true; //接受投影
+          child.castShadow = true; //开启阴影
+        }
+
+
+
+
+
+
+
+        // if(child.isMesh&&child.name === "New_Mesh_3"){
+        //    //接受投影
+        //    child.receiveShadow = true;
         // }
-        if(child.isMesh&&child.name === "New_Mesh_3"){///地面
-           //接受投影
-           child.receiveShadow = true;
-        }
 
-        if(child.isMesh&&child.name === "New_Mesh"){///正面墙
-           child.material = new THREE.MeshStandardMaterial({map:texture}); //设置材质颜色
-        }
-        if(child.isMesh&&child.name === "New_Mesh_6"){//右侧墙
-          child.material = new THREE.MeshStandardMaterial({map:texture});
-          //接受投影
-          child.receiveShadow = true;
-        }
-        if(child.isMesh&&child.name === "New_Mesh_2"){ //后面墙
-          child.material = new THREE.MeshStandardMaterial({map:texture});
-        }
+        // if(child.isMesh&&child.name === "New_Mesh"){///正面墙
+        //    child.material = new THREE.MeshStandardMaterial({map:texture}); //设置材质颜色
+        // }
+        // if(child.isMesh&&child.name === "New_Mesh_6"){//右侧墙
+        //   child.material = new THREE.MeshStandardMaterial({map:texture});
+        //   //接受投影
+        //   child.receiveShadow = true;
+        // }
+        // if(child.isMesh&&child.name === "New_Mesh_2"){ //后面墙
+        //   child.material = new THREE.MeshStandardMaterial({map:texture});
+        // }
 
-        if(child.isMesh&&child.name === "New_Mesh_13"){//左侧墙
-          child.material = new THREE.MeshStandardMaterial({map:texture});
-          //接受投影
-          child.receiveShadow = true;
-          //添加阴影
-          child.castShadow = true;
-        }
+        // if(child.isMesh&&child.name === "New_Mesh_13"){//左侧墙
+        //   child.material = new THREE.MeshStandardMaterial({map:texture});
+        //   //接受投影
+        //   child.receiveShadow = true;
+        //   //添加阴影
+        //   child.castShadow = true;
+        // }
 
       });
       scene.add(gltf.scene);
@@ -103,27 +146,27 @@
     const deskAndChiarArr:Array<THREE.Object3D> = [];
     loaderModel("/public/models/deskAndChiar.glb",loader).then((gltf)=>{
       //放大
-      gltf.scene.scale.set(1.2,1.2,1.2);
-      gltf.scene.position.set(15.5,0,-29); //初始位置
+      gltf.scene.scale.set(0.1,0.1,0.1);
+      gltf.scene.position.set(1.58,0,-3); //初始位置
 
       gltf.scene.traverse((child)=>{
         if(child.isMesh) {
+          child.castShadow = true; //开启阴影
           //接受投影
           child.receiveShadow =true;
-          //添加阴影
-          child.castShadow = true;
+          // //添加阴影
         }
       })
       //添加到场景
 
       const v3 = new THREE.Vector3(); //创建向量
       v3.copy(gltf.scene.position); //获取位置
-      const c = 6;   //设置列数
+      const c = 7;   //设置列数
       const r = 10;   //设置行数
       //行间距
-      const rowSpace = 6.2;
+      const rowSpace = 0.528;
       //列间距
-      const columnSpace = 5.6;
+      const columnSpace = 0.575;
       //设置位置
       for(let i=0;i<c;i++){ //列数
         for(let j=0;j<r;j++){ //行数

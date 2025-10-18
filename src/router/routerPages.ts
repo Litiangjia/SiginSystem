@@ -71,6 +71,13 @@ const routerPages = [
       component:toSignViews("SignViewsTwo")
     },
 
+    {
+      path:"/signViewsImg",
+      name:"signViewsImg", //签到系统主页面
+      meta:{title:"签到"},
+      component:toSignViews("SignViewsOne")
+    },
+
 
     {
         path:"/loging",

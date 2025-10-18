@@ -1,9 +1,11 @@
 <template>
   <div id="signView">
      <div class="animation-boxs col-24">
-        <div class="animation-boxs-item animation-boxs-item--1 col-12" :class="{ 'active':isActive }">
-          <div class="animation-container">图形签到:适合性能低端设备，快速签到，简单易用</div>
-        </div>
+        <router-link to="/signViewsImg">
+          <div class="animation-boxs-item animation-boxs-item--1 col-12" :class="{ 'active':isActive }">
+            <div class="animation-container">图形签到:适合性能低端设备，快速签到，简单易用</div>
+          </div>
+        </router-link>
         <div class="animation-boxs-item animation-boxs-item--2 col-12" :class="{ 'active':isActive }">
           <div class="animation-container">选择签到方式:支持更加低端的设备。更快更准确的签到体验。</div>
         </div>
