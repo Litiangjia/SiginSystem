@@ -18,8 +18,10 @@
     "lint": "run-s lint:*"
   },
   "dependencies": {
+    "@amap/amap-jsapi-loader": "^1.0.1",
     "@capacitor/geolocation": "^7.1.5",
     "axios": "^1.12.2",
+    "bmaplib": "^1.0.1",
     "less": "^4.4.2",
     "pinia": "^3.0.3",
     "pinia-plugin-persistedstate": "^4.5.0",

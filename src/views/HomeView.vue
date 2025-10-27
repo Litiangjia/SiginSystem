@@ -29,7 +29,9 @@
   import {onMounted,ref} from "vue";
   import {useRouter} from "vue-router";
   import {navMenuActive} from "@/assets/ts/nav.ts";
+  import {menu} from "@/assets/store/menu";
 
+  console.log(menu());
 
   const router = useRouter();
 

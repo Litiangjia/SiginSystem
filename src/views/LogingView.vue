@@ -62,7 +62,8 @@
   const loging = handleSubmit(async (values) => {
     try{
       const res = await http.post("students/login", values);
-      const myToken = userToken();
+  //    console.log(res);
+      const myToken = userToken(); // 获取token对象
       myToken.setToken(res.tokenValue); //设置token
       myToken.setTokenName(res.tokenName); //设置token名称
       new D({"type":"success","message":"登陆成功！"});
@@ -74,9 +75,9 @@
 </script>
 
 <style scoped lang="less">
-  @import '@/assets/commonLess/componentsLess/btn.less';
-  @import '@/assets/commonLess/componentsLess/box.less';
-  @import '@/assets/commonLess/componentsLess/input.less';
+  @import '@componentsLess/btn.less';
+  @import '@componentsLess/box.less';
+  @import '@componentsLess/input.less';
 
   #logingView{
     margin: 0;
@@ -88,11 +89,5 @@
     background-repeat: no-repeat;
     background-position: 50%;
     background-size: cover;
-    .error-message {
-      color: red;
-      font-size: 14px;
-      margin-top: 5px;
-      display: block;
-    }
   }
 </style>

@@ -93,6 +93,7 @@ export default {
     const regist = handleSubmit(async(values) => {
       try{
         await http.post('students/register', values);
+
         new D({
           type: "success",
           message: "注册成功",
@@ -101,11 +102,11 @@ export default {
           console.log("注册成功");
           router.push({path: "/loging"})
         });
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       }catch(err){
+        console.log(err);
         new D({
           type: "error",
-          message: "注册失败,请检查账号密码重试",
+          message: ""+err,
           duration: 2000, //
         });
       }
@@ -125,9 +126,9 @@ export default {
 </script>
 
 <style scoped lang="less">
-@import '@/assets/commonLess/componentsLess/btn.less';
-@import '@/assets/commonLess/componentsLess/box.less';
-@import '@/assets/commonLess/componentsLess/input.less';
+@import '@componentsLess/btn.less';
+@import '@componentsLess/box.less';
+@import '@componentsLess/input.less';
 
 #registView {
   margin: 0;

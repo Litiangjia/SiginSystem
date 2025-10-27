@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@amap/amap-jsapi-loader@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/@amap/amap-jsapi-loader/-/amap-jsapi-loader-1.0.1.tgz"
+  integrity sha512-nPyLKt7Ow/ThHLkSvn2etQlUzqxmTVgK7bIgwdBRTg2HK5668oN7xVxkaiRe3YZEzGzfV2XgH5Jmu2T73ljejw==
+
 "@asamuzakjp/css-color@^4.0.3":
   version "4.0.5"
   resolved "https://registry.npmjs.org/@asamuzakjp/css-color/-/css-color-4.0.5.tgz"
@@ -1169,6 +1174,11 @@ birpc@^2.3.0, birpc@^2.4.0, birpc@^2.5.0:
   version "2.6.1"
   resolved "https://registry.npmjs.org/birpc/-/birpc-2.6.1.tgz"
   integrity sha512-LPnFhlDpdSH6FJhJyn4M0kFO7vtQ5iPw24FnG0y21q09xC7e8+1LeR31S1MAIrDAHp4m7aas4bEkTDTvMAtebQ==
+
+bmaplib@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/bmaplib/-/bmaplib-1.0.1.tgz"
+  integrity sha512-cMXpaRYI8xGFwvLdWXYXIKCFD0iZji7DUzVTmBDs1ad2AzkRbknRIPdBl0FeE/AjeICbaAAPQr3bA2Z1HfnI7A==
 
 boolbase@^1.0.0:
   version "1.0.0"

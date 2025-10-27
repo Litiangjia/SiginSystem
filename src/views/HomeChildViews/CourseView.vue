@@ -111,7 +111,7 @@ onMounted(() => {
 })
 </script>
 <style scoped lang="less">
-   @import '@/assets/commonLess/componentsLess/table.less';
+   @import '@componentsLess/table.less';
    @media (max-width: 900px) {
       .course-table{
         min-width:768px;

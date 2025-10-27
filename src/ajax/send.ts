@@ -1,10 +1,27 @@
 // src/assets/ajax/send.ts
 import axios, { type AxiosInstance, type AxiosRequestConfig, type AxiosResponse, type InternalAxiosRequestConfig } from 'axios';
 import { userToken } from '@/assets/store/userToken';
+import { adminToken } from '@/assets/store/adminToken';
+import D from "@/assets/ts/newMessageDialog";
+import router from '@/router' // 根据实际路径调整
+
+// 检测是否为移动设备
+const isMobile = (): boolean => {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+};
+// 根据设备类型设置 baseURL
+const getBaseURL = (): string => {
+  if (isMobile()) {
+    // 移动端 baseURL
+    return 'http://100.82.84.45:8081/';
+  } else {
+    // PC端 baseURL
+    return 'http://localhost:8081/';
+  }
+};
 // 创建 axios 实例
-const mytoken = userToken();
 const request: AxiosInstance = axios.create({
-  baseURL: 'http://localhost/', // 支持环境变量配置
+  baseURL: getBaseURL(),
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json'
@@ -15,13 +32,27 @@ const request: AxiosInstance = axios.create({
 request.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     // 1. 添加认证 token
-    const token:string | null = mytoken.token;
-    const tokenName:string = mytoken.tokenName;
+    const token:string | null = userToken().token;
+    const tokenName:string = userToken().tokenName;
+
+
     if (token && config.headers) {
       //这里配置token
      // config.headers['Authorization'] = `Bearer ${token}`;
       config.headers[tokenName] = token;
     }
+
+    //添加管理员token
+    const admin_Token:string | null = adminToken().token;
+    const adminTokenName:string = adminToken().tokenName;
+
+    if (admin_Token && config.headers) {
+      //这里配置token
+     // config.headers['Authorization'] = `Bearer ${token}`;
+      config.headers[adminTokenName] = admin_Token;
+    }
+
+
     // 2. 添加其他通用请求头
     config.headers['X-Requested-With'] = 'XMLHttpRequest';
     config.headers['Accept'] = 'application/json';
@@ -44,18 +75,34 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   (response: AxiosResponse) => {
     const { data } = response;
+
+    if(!data) return D.error('服务器返回数据格式异常');
     // 根据后端约定的响应结构处理
     if (data.code === 200) {
       return data.data; // 返回实际数据
     } else {
-      // 处理业务错误
-   //   console.error('业务错误:', data);
+      //特殊token错误处理 500，401错误处理
+      if(data.code === 500){
+        D.error('用户登录已过期，请重新登录');
+        //后端错误处理
+        if(data.msg.includes('admin')){
+          adminToken().clearToken();
+          //跳转登录页面
+          router.push({path: '/admin/loging'});
+        }
+
+        if(data.msg.includes('user')){
+          userToken().clearToken();
+          //跳转登录页面
+          router.push({path: '/loging'});
+        }
+
+      }
       return Promise.reject(new Error(data.msg || '请求失败'));
     }
   },
   (error) => {
     const { response } = error;
-
     // 处理 HTTP 错误状态码
     if (response) {
       switch (response.status) {

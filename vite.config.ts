@@ -8,7 +8,7 @@ import basicSsl from '@vitejs/plugin-basic-ssl'
 // https://vite.dev/config/
 export default defineConfig({
   server: {
-    port: 8080, //端口好改为8080
+    port: 80, //端口好改为8080
     https:{},
     host:true,
   },
@@ -20,7 +20,8 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '@componentsLess':fileURLToPath(new URL('./src/assets/commonLess/componentsLess', import.meta.url)),
     },
   },
 })

@@ -1,6 +1,6 @@
 // dialog.ts
 import '@/assets/commonLess/componentsLess/messageDialog.less';
-import { date } from 'yup';
+
 
 //规范化的消息提示框（接口既是规范，又是功能）
 interface DialogOptions {
@@ -109,23 +109,35 @@ class MessageDialog {
           <div class="warningDialog__title">警告</div>
           <div class="warningDialog__content">${this.options.message}</div>
           <div class="warningDialog__actions">
-            <button>确定</button>
+            <button class="warningDialog_cancel" style="margin-right:2rem;">取消</button>
+            <button class="warningDialog_enter">确定</button>
           </div>
         `
         // 绑定关闭事件
-        this.bindCloseEvent('warningDialog__actions',"close__warningDialog");
+        this.bindCloseEvent('warningDialog_enter',"close__warningDialog");
+        this.bindCloseEventCancel('warningDialog_cancel',"close__warningDialog");
         break;
     }
-    //执行回调函数
-    this.element.addEventListener('animationend', () => {
-      //this.enter(function)
-      this.fn(); //执行回调函数
-    })
+
   }
   /**
-   * 绑定关闭事件
+   * 绑定确认关闭事件
    */
   public bindCloseEvent(className:string,className2:string|null=null){
+     // 绑定关闭事件
+    const closeBtn = this.element.querySelector('.'+className) as HTMLButtonElement;
+    closeBtn.addEventListener('click', () => {
+      this.close(className2);
+          //执行回调函数
+      this.element.addEventListener('animationend', () => {
+         this.fn(); //执行回调函数
+      })
+    });
+  }
+    /**
+   * 绑定取消关闭事件
+   */
+  public bindCloseEventCancel(className:string,className2:string|null=null){
      // 绑定关闭事件
     const closeBtn = this.element.querySelector('.'+className) as HTMLButtonElement;
     closeBtn.addEventListener('click', () => {

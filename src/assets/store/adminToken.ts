@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 
-export const userToken = defineStore('schoolToken', {
+export const adminToken = defineStore('schoolTokenAdmin', {
   state: () => ({
     token: null as string | null,
     tokenName:'satoken' as string,
@@ -34,7 +34,7 @@ export const userToken = defineStore('schoolToken', {
   },
 
   persist: {
-    key: 'token-user-store',
+    key: 'token-admin-store',
     storage: localStorage,
     pick: ['token','tokenName'],
   },

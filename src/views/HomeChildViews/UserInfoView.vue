@@ -66,9 +66,9 @@
 </script>
 
 <style scoped lang="less">
-  @import "@/assets/commonLess/componentsLess/box.less";
-  @import "@/assets/commonLess/componentsLess/btn.less";
-  @import "@/assets/commonLess/componentsLess/boxAnim.less";
+  @import "@componentsLess/box.less";
+  @import "@componentsLess/btn.less";
+  @import "@componentsLess/boxAnim.less";
 
     .center-box{
       padding:0;

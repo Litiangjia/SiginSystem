@@ -33,7 +33,7 @@
 </script>
 
 <style lang="less" scoped>
-  @import '@/assets/commonLess/componentsLess/box.less';
-  @import '@/assets/commonLess/componentsLess/boxAnim.less';
+  @import '@componentsLess/box.less';
+  @import '@componentsLess/boxAnim.less';
 </style>
 

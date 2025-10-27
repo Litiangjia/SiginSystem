@@ -226,6 +226,6 @@
 </script>
 
 <style scoped lang="less">
-  @import '@/assets/commonLess/componentsLess/table.less';
+  @import '@componentsLess/table.less';
 
 </style>

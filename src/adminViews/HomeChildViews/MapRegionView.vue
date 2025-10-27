@@ -1,6 +1,6 @@
-<!-- <template>
+<template>
   <div class="sign-views-one">
-    <div id="map" style="width:100vw;height:80vh"></div>
+    <div id="map" style="width:100%;height:80vh"></div>
 
     <div class="map-controls">
       <button @click="start">开始绘制区域</button>
@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import { Geolocation } from '@capacitor/geolocation';
+// import { Geolocation } from '@capacitor/geolocation';
 import D from "@/assets/ts/newMessageDialog"
 import AMapLoader from "@amap/amap-jsapi-loader";
 import { ref } from 'vue';
@@ -31,18 +31,18 @@ window._AMapSecurityConfig = {
   securityJsCode: "3424d034f5bc70377a280750db150919", // 高德地图安全密钥
 };
 
-const getCurrentPosition = async () => {
-  try {
-    const position = await Geolocation.getCurrentPosition();
-    const { latitude, longitude } = position.coords;
-    D.success("定位成功" + "纬度：" + latitude + "经度：" + longitude);
-    return position;
-  } catch (error) {
-    D.error("定位失败!请使用移动设备，并且授予位置权限");
-    console.error('获取位置失败:', error);
-    return null;
-  }
-};
+// const getCurrentPosition = async () => {
+//   try {
+//     const position = await Geolocation.getCurrentPosition();
+//     const { latitude, longitude } = position.coords;
+//     D.success("定位成功" + "纬度：" + latitude + "经度：" + longitude);
+//     return position;
+//   } catch (error) {
+//     D.error("定位失败!请使用移动设备，并且授予位置权限");
+//     console.error('获取位置失败:', error);
+//     return null;
+//   }
+// };
 
 // 判定当前位置是否在绘制区域内
 const checkPositionInArea = async () => {
@@ -92,6 +92,8 @@ const checkPositionInArea = async () => {
     icon: "https://a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png",
     offset: new AMap.Pixel(-13, -30),
   });
+
+  console.log(marker);
 };
 
 // 清除所有绘制内容
@@ -106,7 +108,7 @@ const clearAll = () => {
   });
 
   drawnOverlays = [];
-  D.success("已清除所有绘制内容");
+  D.info("已清除所有绘制内容",2000);
 };
 
 // 开始绘制区域
@@ -181,14 +183,9 @@ onMounted(async () => {
       plugins: ["AMap.Scale", "AMap.MouseTool"], // 需要使用的的插件列表
     })
 
-   // const position = await getCurrentPosition(); /// 调用获取位置函数
-    // if (!position) return
-
-   // const { latitude, longitude } = position.coords; //获取经纬度
-
     map = new AMap.Map("map", {
       viewMode: "2D", //默认使用 2D 模式
-      zoom: 11, //地图级别
+      zoom: 15, //地图级别
       center: [116.084475,22.930681], //地图中心点
     })
 
@@ -214,13 +211,20 @@ onMounted(async () => {
     console.log(e);
   }
 });
+
+const meta = {
+  title:'sssssd'
+}
+
+defineExpose({meta});
+
 </script>
 
 <style scoped>
 .map-controls {
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 6rem;
+  left: 5%;
   z-index: 100;
 }
 
@@ -236,4 +240,4 @@ onMounted(async () => {
 .map-controls button:hover {
   background-color: #f0f0f0;
 }
-</style> -->
+</style>
