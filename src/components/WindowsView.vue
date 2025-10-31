@@ -68,7 +68,7 @@
 
 <script setup lang="ts">
 import { http } from '@/ajax/send';
-import { ref, defineProps, defineEmits,onMounted } from 'vue'
+import { ref,onMounted } from 'vue'
 import type { Classes , PageRequest} from '@/assets/ts/interfaceManager';
 // 定义组件属性
 const props =defineProps({

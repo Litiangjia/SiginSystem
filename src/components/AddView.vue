@@ -146,7 +146,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, defineEmits } from 'vue'
+import { ref } from 'vue'
 
 // 定义组件属性
 const props = defineProps({
