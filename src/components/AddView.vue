@@ -3,112 +3,135 @@
   <div class="add-view-overlay" v-if="visible" @click="closeOverlay">
     <div class="add-view-container" @click.stop :class="{ 'show': visible }">
       <div class="add-view-header">
-        <h2>编辑学生信息</h2>
+        <h2>添加数据</h2>
         <button class="close-btn" @click="close">×</button>
       </div>
 
       <div class="add-view-content">
-        <form @submit.prevent="addStudent">
-          <div class="form-group">
-            <label for="studentName">姓名</label>
-            <input
-              id="studentName"
-              v-model="student.name"
-              type="text"
-              required
-            />
-          </div>
+        <form v-if="dataType==='student'" @submit.prevent="add">
+          <div class="form-group" v-for="(v,atr) in Data" :key="atr">
+            <label>{{atr==='name'? '姓名'
+            :atr==='studentNumber'? '学号'
+            :atr==='gender'? '性别'
+            :atr==='age'? '年龄'
+            :atr==='major'? '专业'
+            :atr==='active'? '激活状态'
+            :atr==='class'? '班级'
+            :atr==='phoneNumber'? '联系电话'
+            :atr==='email'? '邮箱'
+            :atr==='enrollmentDate'? '入学时间'
+            :atr==='studentPassword'? '密码'
+            :atr}}</label>
 
-           <div class="form-group">
-            <label for="studentPassword">密码</label>
-            <input
-              id="studentPassword"
-              v-model="student.studentPassword"
-              type="text"
-              required
-            />
-          </div>
+            <select v-if="atr==='active'" id="active" v-model="Data[atr]">
+              <option value="0">未激活(禁用)</option>
+              <option value="1">激活(启用)</option>
+            </select>
 
-          <div class="form-group">
-            <label for="studentId">学号</label>
-            <input
-              id="studentId"
-              v-model="student.studentNumber"
-              type="text"
-              required
-            />
-          </div>
-
-          <div class="form-group">
-            <label for="gender">性别</label>
-            <select id="gender" v-model="student.gender">
+            <select v-else-if="atr==='gender'" id="gender" v-model="Data[atr]">
               <option value="1">男</option>
               <option value="2">女</option>
               <option value="0">未知</option>
             </select>
-          </div>
 
-          <div class="form-group">
-            <label for="age">年龄</label>
-            <input
-              id="age"
-              v-model.number="student.age"
-              type="number"
-              min="10"
-              max="100"
+             <input
+              v-else
+              :id="atr"
+              v-model="Data[atr]"
+              :type="atr==='age'? 'number' : atr==='enrollmentDate'? 'date' : atr==='phoneNumber'? 'tel' : 'text'"
+              required
             />
+            <!-- {{atr}} -->
           </div>
+        </form>
+        <form v-else-if="dataType==='course'" @submit.prevent="add">
+          <div class="form-group" v-for="(v,atr) in Data" :key="atr">
+            <label :for="atr">{{atr==='courseName'? '课程名称'
+            :atr}}</label>
 
-          <div class="form-group">
-            <label for="major">专业</label>
-            <input
-              id="major"
-              v-model="student.major"
-              type="text"
-            />
-          </div>
-
-           <div class="form-group">
-            <label for="gender">激活状态</label>
-            <select id="gender" v-model="student.active">
+            <select v-if="atr==='active'" id="active" v-model="Data[atr]">
               <option value="0">未激活(禁用)</option>
               <option value="1">激活(启用)</option>
             </select>
-          </div>
 
-          <!-- <div class="form-group">
-            <label for="class">班级</label>
-            <input
-              id="class"
-              v-model="student.class"
-              type="text"
+            <!-- <select v-else-if="atr==='gender'" id="gender" v-model="Data[atr]">
+              <option value="1">男</option>
+              <option value="2">女</option>
+              <option value="0">未知</option>
+            </select> -->
+
+             <input
+              v-else
+              :id="atr"
+              v-model="Data[atr]"
+              :type="atr==='age'? 'number' : atr==='enrollmentDate'? 'date' : atr==='phoneNumber'? 'tel' : 'text'"
+              required
             />
-          </div> -->
-
-          <div class="form-group">
-            <label for="phone">联系电话</label>
-            <input
-              id="phone"
-              v-model="student.phoneNumber"
-              type="tel"
-            />
+            <!-- {{atr}} -->
           </div>
-
-          <div class="form-group">
-            <label for="email">邮箱</label>
-            <input
-              id="email"
-              v-model="student.email"
-              type="email"
-            />
+        </form>
+        <form v-else-if="dataType==='classes'" @submit.prevent="add">
+          <div class="form-group" v-for="(v,atr) in Data" :key="atr">
+              <label :for="atr">{{atr==='className'? '班级名称'
+              :atr==='classNumber'? '班级'
+              :atr==='grade'? '年级'
+              :atr}}</label>
+              <select v-if="atr==='classNumber'" id="classNumber" v-model="Data[atr]">
+                <option value="1">(1)班</option>
+                <option value="2">(2)班</option>
+                <option value="3">(3)班</option>
+                <option value="4">(4)班</option>
+                <option value="5">(5)班</option>
+                <option value="6">(6)班</option>
+              </select>
+              <select v-else-if="atr==='grade'" id="grade" v-model="Data[atr]">
+                <option value="1">一年级</option>
+                <option value="2">二年级</option>
+                <option value="3">三年级</option>
+                <option value="4">四年级</option>
+                <option value="5">五年级</option>
+                <option value="6">六年级</option>
+              </select>
+              <input
+                v-else
+                :id="atr"
+                v-model="Data[atr]"
+                required
+              />
           </div>
-
-          <div class="form-group">
-            <label for="enrollmentDate">入学时间</label>
+        </form>
+        <form v-else-if="dataType==='courseSchedule'" @submit.prevent="add">
+          <div class="form-group" v-for="(v,atr) in Data" :key="atr">
+            <label :for="atr">{{atr==='scheduleId'? 'ID'
+            :atr==='startTime'? '开始时间'
+            :atr==='endTime'? '结束时间'
+            :atr==='createdAt'? '创建时间'
+            :atr==='updatedAt'? '更新时间'
+            :atr==='numberOfLessons'? '节数'
+            :atr}}</label>
+            <select v-if="atr==='numberOfLessons'" id="numberOfLessons" v-model="Data[atr]">
+              <option value="0">未指定</option>
+              <option value="1">第一节</option>
+              <option value="2">第二节</option>
+              <option value="3">第三节</option>
+              <option value="4">第四节</option>
+              <option value="5">第五节</option>
+              <option value="6">第六节</option>
+              <option value="7">第七节</option>
+              <option value="8">第八节</option>
+              <option value="9">第九节</option>
+              <option value="10">第十节</option>
+              <option value="11">第十一节</option>
+              <option value="12">第十二节</option>
+              <option value="13">第十三节</option>
+              <option value="14">第十四节</option>
+            </select>
             <input
-              id="enrollmentDate"
-              v-model="student.enrollmentDate"
-              type="date"
+              v-else
+              :id="atr"
+              v-model="Data[atr]"
+              :type="atr==='startTime' || atr==='endTime'? 'time' : atr==='createdAt' || atr==='updatedAt' ? 'date' : 'text'"
+              required
             />
           </div>
         </form>
@@ -116,7 +139,7 @@
 
       <div class="add-view-footer">
         <button class="action-btn secondary" @click="close">取消</button>
-        <button class="action-btn primary" @click="addStudent">添加</button>
+        <button class="action-btn primary" @click="add">添加</button>
       </div>
     </div>
   </div>
@@ -125,27 +148,61 @@
 <script setup lang="ts">
 import { ref, defineProps, defineEmits } from 'vue'
 
-const student = ref({
-  name: '',
-  studentNumber: '',
-  gender: '',
-  age: 0,
-  major: '',
-  active: 1,
-  enrollmentDate: '',
-  phoneNumber: '',
-  email: '',
-  studentPassword:'123456' //默认密码
-})
-
 // 定义组件属性
-defineProps({
+const props = defineProps({
   visible: {
     type: Boolean,
     default: false,
   },
+  dataType:{
+    type: String,
+    default: 'student'
+  }
 })
 
+let Data = ref({});
+if(props.dataType === 'student'){
+   Data = ref({
+    name: '',
+    studentNumber: '',
+    gender: '',
+    age: 0,
+    major: '',
+    active: 1,
+    enrollmentDate: '',
+    phoneNumber: '',
+    email: '',
+    studentPassword:'123456'
+  })
+}else if(props.dataType === 'course'){
+   Data = ref({
+     courseName: '',
+   });
+}else if(props.dataType === 'classes'){
+   Data = ref({
+  className: '',
+  classNumber: 1,
+  grade:1
+  });
+}else if(props.dataType === 'courseSchedule'){
+  Data = ref({
+    startTime: '00:00:00',
+    endTime: '00:00:00',
+    numberOfLessons:0,
+  });
+}
+
+
+  // interface CourseSchedule{
+  //   scheduleId?: number;
+  //   startTime: Date;
+  //   endTime: Date;
+  //   createdAt: Date;
+  //   updatedAt: Date;
+  //   numberOfLessons: number;
+  // }
+
+// console.log(Data);
 // 定义事件发射器
 const emit = defineEmits(['update:addVisible', 'close','add'])
 
@@ -162,8 +219,8 @@ const closeOverlay = () => {
 }
 
 // 添加学生信息
-const addStudent = () => {
-  emit('add', student.value) // 发射事件 传递数据
+const add = () => {
+  emit('add', Data.value) // 发射事件 传递数据
   close()
 }
 </script>
@@ -179,7 +236,7 @@ const addStudent = () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1003;
+  z-index: 1006;
   animation: fadeIn 0.3s ease-out;
 }
 

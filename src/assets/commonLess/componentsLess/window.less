@@ -1,0 +1,58 @@
+.wndows1 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1005;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  // 弹窗内容区域
+  .wndows1-content {
+    background-color: white;
+    border-radius: 8px;
+    box-sizing: border-box;
+    padding:1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    animation: wndows1-fadeIn 0.3s ease-out;
+    width: 80%;
+    height: 90%;
+
+    @media screen and (max-width: 768px) {
+      width: 98%;
+      height: 99%;
+    }
+  }
+
+
+  // 背景遮罩动画
+  &.v-enter-active, &.v-leave-active {
+    transition: opacity 0.3s ease;
+    .wndows1-content {
+      transition: transform 0.3s ease;
+    }
+  }
+
+  &.v-enter-from, &.v-leave-to {
+    opacity: 0;
+
+    .wndows1-content {
+      transform: scale(0.9);
+    }
+  }
+}
+
+// 淡入动画
+@keyframes wndows1-fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

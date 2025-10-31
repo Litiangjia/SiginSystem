@@ -1,7 +1,7 @@
 <template>
-  <LookView v-if="visible" :visible="visible" :student="student" @close="close"></LookView>
-  <EditView v-if="editVisible" :visible="editVisible" :student="student" @save="saveStudent" @close="closeEdit"></EditView>
-   <AddView v-if="addVisible" :visible="addVisible" @add="addStudent" @close="closeAdd"></AddView>
+  <LookView v-if="visible" :visible="visible" :Data="student" @close="close"></LookView>
+  <EditView v-if="editVisible" :visible="editVisible" :Data="student" @save="saveStudent" @close="closeEdit"></EditView>
+  <AddView v-if="addVisible" :visible="addVisible" @add="addStudent" @close="closeAdd"></AddView>
   <div class="admin-list-container">
     <!-- 标题区域 -->
     <div class="list-header">
@@ -73,24 +73,11 @@
   import EditView from '@/components/EditView.vue';
   import AddView from '@/components/AddView.vue';
   import D from "@/assets/ts/newMessageDialog"
-
-
+  import type{ PageRequest,Student} from "@/assets/ts/interfaceManager";
   const visible = ref(false); // 是否显示查看框
   const editVisible = ref(false); // 是否显示编辑框
   const addVisible = ref(false); //显示添加框
   const nomalCurrent = ref(1); // 默认分页
-
-  interface Student {
-    studentId: number;
-    classId: number;
-    name: string;
-    active: number;
-    age: number;
-    phoneNumber: string;
-    studentNumber: string;
-    token: string;
-    createTime: Date;  // 时间类型
-  }
 
 
 
@@ -209,13 +196,6 @@
   }
 
 
-  interface Res{
-    records: Student[];
-    total: number;
-    current: number;
-    size: number;
-    pages: number;
-  }
 
   onMounted(async() => {
     pageGet(pages.value.current,pages.value.size);//加载数据
@@ -223,11 +203,11 @@
 
 
   const pageGet = async (current: number ,size: number) => {
-    let res: Res;
+    let res: PageRequest<Student>;
     if (search.value !== '') {
-       res = await http.get(`/admin/studentsList/search/${search.value}/${current}/${size}`) as Res;
+       res = await http.get(`/admin/studentsList/search/${search.value}/${current}/${size}`) as PageRequest<Student>;
     }else{
-       res = await http.get(`/admin/studentsList/page/${current}/${size}`) as Res;
+       res = await http.get(`/admin/studentsList/page/${current}/${size}`) as PageRequest<Student>;
     }
 
     studentsList.value = res.records;

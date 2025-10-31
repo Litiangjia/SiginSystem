@@ -77,13 +77,8 @@ import {http} from '@/ajax/send';
 import D from '@/assets/ts/newMessageDialog';
 import {adminToken} from "@/assets/store/adminToken";
 import {menu} from "@/assets/store/menu";
-interface Menu {
-  name: string;
-  url?: string;
-  root?: boolean;
-  childrenActive?: boolean;
-  children?: Menu[];
-}
+import type {Menu} from "@/assets/ts/interfaceManager";
+
 export default {
   name: 'TopNav',
   data() {

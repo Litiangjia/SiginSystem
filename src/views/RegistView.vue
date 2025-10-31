@@ -39,7 +39,7 @@
       </div>
 
       <div class="margin-top-2">
-        <button class="btn margin-top-2 float-left col-24" :disabled="!meta.valid">注册</button>
+        <button class="btn1 margin-top-2 float-left col-24" :disabled="!meta.valid">注册</button>
       </div>
     </form>
   </div>

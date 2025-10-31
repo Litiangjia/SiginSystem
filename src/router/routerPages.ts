@@ -1,6 +1,7 @@
 import {type RouteRecordRaw } from 'vue-router'
 //创建目录结构
 interface DirectoryFace{
+  url:string,
   key:string,
   name:string,
   arr:string[],
@@ -18,18 +19,53 @@ function autoRouter(fileds:FileModules,dir:string,root:string=''){
     const strs = key.split(dir+'/')[1]||'';
     //拿到文件名称
     const isDirectory = strs.split('/')||'';
+    // console.log(strs);
+//     let originalString = "hello world, hello universe";
+// let searchString = "hello";
+// let replacementString = "hi";
+
+// // 使用正则表达式和全局标志 'g' 进行替换
+// let newString = originalString.replace(new RegExp(searchString, 'g'), replacementString);
+
+// console.log(newString); // 输出: hi world, hi universe
+
+    let url = strs.replace(new RegExp('ChildViews','g'),'');
+    url = url.replace('View.vue','');
+    url = url.replace('.vue','');
+    url = url.replace('Home','');
+    url = url.toLowerCase();
+    url = url.replace(new RegExp('index','g'),'');
+
+    if(url.indexOf('/')<=-1 && url.length>0){//判断是否是根目录
+      url = '/'+url;
+    }
+    if(root!==''){
+      url = '/'+root+url;
+    }
+    // console.log(url);
     if(isDirectory.length>1){ //判断是否是目录并且拥有ChildViewds名称
-     // console.log(isDirectory[0]?.includes('ChildViews'));
-   //   console.log(isDirectory,isDirectory[0]?.replace('ChildViews','').toLocaleLowerCase()||'');
       // console.log(isDirectory);
 
+      const dirs:string[] = [];
+      for(let i=0;i<isDirectory.length;i++){
+        if(isDirectory[i]?.includes('ChildViews')||isDirectory[i]?.includes('View.vue')){
+          dirs.push(isDirectory[i] as string);
+        }
+      }
+
+      const rootName = isDirectory[0]?.replace('ChildViews','').toLocaleLowerCase()||'';
+
       DirectoryArray.push({
+        url:url,
         key:key,
-        name:root+isDirectory[0]?.replace('ChildViews','').toLocaleLowerCase()||'',
-        arr:isDirectory,
-        index:isDirectory.length,
-        nextIndex:isDirectory.length+1,
+        name:root+rootName,
+        arr:dirs,
+        index:dirs.length,
+        nextIndex:dirs.length+1,
       })
+
+
+      // console.log(DirectoryArray);
 
      // console.log(DirectoryArray);
     //  console.log(DirectoryArray);
@@ -57,14 +93,18 @@ function autoRouter(fileds:FileModules,dir:string,root:string=''){
     if(dir.length>0){//能找到说明当前item有子目录
       item.children = []; // 子路由数组
       dir.forEach((dirItem) => { // 遍历子目录 ，为子目录添加路由信息
+      //  console.log(dirItem.key.split('')[1]);
+
         const name = dirItem.arr[dirItem.index-1]?.replace('View.vue','').toLocaleLowerCase()||''//获取当前目录的名称
+      //  console.log(dirItem.url);
+
         const componentLoader = fileds[dirItem.key];
         if(item.children&&componentLoader){
-          const pathName =name==='home'||name==='index' ? '' :'/'+name;
+          // const pathName =name==='home'||name==='index' ? '' :'/'+name;
           const newName =name==='home'||name==='index' ? '/index' :'/'+name;
           const children = {
-            path:item.path==='/'?pathName:item.path+pathName,
-            name:item.name?.toString()+newName,
+            path:dirItem.url,
+            name:dirItem.url.replace('/',''),
             component:componentLoader, // 确保不会是 undefined
           };
 
@@ -91,6 +131,7 @@ const adminFileds = import.meta.glob(`@/adminViews/**/*.vue`);
 const adminPages = autoRouter(adminFileds,'adminViews','admin');
 const fileds = import.meta.glob(`@/views/**/*.vue`);
 const pages = autoRouter(fileds,"views");
+
 const toSignViews = (path:string)=>{
   //使用模板字符串动态拼接路由地址
   return () => import(`@/views/Signviews/${path}.vue`);
@@ -109,6 +150,13 @@ routerPages = [
       name:"signViewsImg", //签到系统主页面
       meta:{title:"签到"},
       component:toSignViews("SignViewsOne")
+    },
+    {
+      path:"/test",
+      name:"test", //签到系统主页面
+      meta:{title:"测试"},
+      component:() => import('@/TestView.vue')
+
     },
     //404跳转
     { path: '/:pathMatch(.*)*', redirect: '/404' },
@@ -133,6 +181,5 @@ routerPages.forEach((item)=>{
 
 
 
-// console.log(routerPages)
 export default routerPages;
 

@@ -2,61 +2,90 @@
   <div class="look-view-overlay" v-if="visible" @click="closeOverlay">
     <div class="look-view-container" @click.stop :class="{ 'show': visible }">
       <div class="look-view-header">
-        <h2>学生信息详情</h2>
+        <h2>信息详情</h2>
         <button class="close-btn" @click="close">×</button>
       </div>
 
-      <div class="look-view-content">
+      <div class="look-view-content" >
         <div class="student-avatar">
           <!-- <img :src="student.avatar || defaultAvatar" :alt="student.name" /> -->
         </div>
-
-        <div class="student-info">
-          <div class="info-row">
-            <span class="label">姓名:</span>
-            <span class="value">{{ student.name }}</span>
+        <!-- 学生数据 -->
+        <div class="look-info" v-if="dataType==='student'">
+          <div class="info-row" v-for="(v,atr) in Data" :key="atr">
+            <span class="label">
+              {{ atr==='studentId'?'Id'
+              :atr==='name'?'姓名'
+              :atr==='age'?'年龄'
+              :atr==='classId'?'班级Id'
+              :atr==='phoneNumber'?'手机号'
+              :atr==='email'?'邮箱'
+              :atr==='enrollmentDate'?'入学时间'
+              :atr==='avatar'?'头像'
+              :atr==='major'?'专业'
+              :atr==='gender'?'性别'
+              :atr==='studentNumber'?'学号'
+              :atr==='grade'?'年级'
+              :atr==='active'?'是否激活'
+              :atr==='createTime'?'创建时间'
+              :atr==='studentPassword'?'密码'
+              :atr==='avatarUrl'?'头像Url'
+              :atr
+              }}
+            </span>
+            <span class="value">
+              {{atr==='active'?v==1?'激活':'未激活'
+                :atr==='gender'?v==1?'男':v==2?'女':'未知':v
+              }}
+            </span>
           </div>
 
-          <div class="info-row">
-            <span class="label">学号:</span>
-            <span class="value">{{ student.studentNumber }}</span>
-          </div>
-
-          <div class="info-row">
-            <span class="label">性别:</span>
-            <span class="value">{{ student.gender===0?"未知":student.gender===1?"男":"女" }}</span>
-          </div>
-
-          <div class="info-row">
-            <span class="label">年龄:</span>
-            <span class="value">{{ student.age }}</span>
-          </div>
-
-          <div class="info-row">
-            <span class="label">专业:</span>
-            <span class="value">{{ student.major===null?"未知":student.major }}</span>
-          </div>
-
-          <div class="info-row">
-            <span class="label">班级:</span>
-            <span class="value">{{ student.classId }}</span>
-          </div>
-
-          <div class="info-row">
-            <span class="label">联系电话:</span>
-            <span class="value">{{ student.phoneNumber }}</span>
-          </div>
-
-          <div class="info-row">
-            <span class="label">邮箱:</span>
-            <span class="value">{{ student.email===null?"未知":student.email }}</span>
-          </div>
-
-          <div class="info-row">
-            <span class="label">入学时间:</span>
-            <span class="value">{{ student.enrollmentDate===null?"未填":student.enrollmentDate }}</span>
+        </div>
+        <!-- 课程数据 -->
+        <div class="look-info" v-if="dataType==='course'">
+          <div class="info-row" v-for="(v,atr) in Data" :key="atr">
+            <span class="label">
+              {{ atr==='courseId'?'Id'
+              :atr==='courseName'?'课程名'
+              :atr
+              }}
+            </span>
+            <span class="value">
+              {{v}}
+            </span>
           </div>
         </div>
+        <!-- 班级数据 -->
+        <div class="look-info" v-if="dataType==='classes'">
+          <div class="info-row" v-for="(v,atr) in Data" :key="atr">
+            <span class="label">
+              {{ atr==='classId'?'Id'
+              :atr==='className'?'班级名'
+              :atr==='classNumber'?'班级'
+              :atr==='grade'?'年级'
+              :atr
+              }}
+            </span>
+            <span class="value">
+              {{v}}
+            </span>
+          </div>
+        </div>
+
+        <div class="look-info" v-if="dataType==='courseSchedule'">
+          <div class="info-row" v-for="(v,atr) in Data" :key="atr">
+            <span class="label">{{atr==='scheduleId'? 'ID'
+                  :atr==='startTime'? '开始时间'
+                  :atr==='endTime'? '结束时间'
+                  :atr==='createdAt'? '创建时间'
+                  :atr==='updatedAt'? '更新时间'
+                  :atr==='numberOfLessons'? '节数'
+                  :atr}}
+            </span>
+            <span class="value">{{atr==='numberOfLessons'?'第'+v+'节':v}}</span>
+          </div>
+        </div>
+
       </div>
 
       <div class="look-view-footer">
@@ -76,10 +105,14 @@ defineProps({
     type: Boolean,
     default: false
   },
-  student: {
+  dataType: {
+    type: String,
+    default: 'student'
+  },
+  Data: {
     type: Object,
     default: () => ({})
-  }
+  },
 })
 
 // 定义事件发射器
@@ -121,7 +154,7 @@ const exportInfo = () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1003;
+  z-index: 1006;
   animation: fadeIn 0.3s ease-out;
 }
 
@@ -203,7 +236,7 @@ const exportInfo = () => {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.student-info {
+.look-info {
   width: 100%;
 }
 

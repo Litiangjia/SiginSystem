@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import routerPages from './routerPages'
-
 import { auth } from './auth'
+import {menu} from "@/assets/store/menu";
 
 
 const router = createRouter({
@@ -11,19 +11,36 @@ const router = createRouter({
 })
 //路由守卫
 router.beforeEach((to, from, next) => {
-  auth(to,next);  //登录验证
+  menu().adminMenuList.forEach((item)=>{
+    if(item.root){
+      item.children?.forEach((childItem)=>{
+        if(childItem.url === to.path){
+         // auth(to,next)
+         window.document.title = childItem.name;
+        }
+      })
+    }else if(item.url === to.path){
+      window.document.title = item.name;
+    }
+  })
+
+  menu().menuList.forEach((item)=>{
+    if(item.url === to.path){
+      window.document.title = item.name;
+      item.navActive = true;
+    }else{
+      item.navActive = false;
+    }
+  })
 
 
 
 
 
+  auth(to,next);  //登录验证 放在最后
 
+  next();
 
-  // const nullToken = to.meta?.nullToken;
- // if(token.token==null && nullToken == undefined) next({path:"/loging"})
-//  if(token.token!=null && nullToken) next({path:"/"})
-
-  // next();
 })
 
 export default router

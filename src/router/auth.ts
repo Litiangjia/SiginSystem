@@ -32,9 +32,6 @@ export async function auth(to: RouteLocationNormalizedGeneric,next: NavigationGu
        return next("/admin/loging");
      }
     }
-
-
-    return next();
   }else{
     //前端权限验证
   //  console.log(userToken().token,"sdfdsfdsfsdf");
@@ -42,22 +39,20 @@ export async function auth(to: RouteLocationNormalizedGeneric,next: NavigationGu
     //验证用户是否登录
     //如果用户未登录，则跳转到登录页面
     //如果用户已登录，则正常跳转
-   if(!userToken().token)return next("/loging");
+    if(!userToken().token)return next("/loging");
 
-  if(userToken().token){
-    try{
-      await http.get("/checkLogin");
-    }catch(e){
-      userToken().clearToken();
-      return next("/loging");
+    if(userToken().token){
+      try{
+        await http.get("/checkLogin");
+      }catch(e){
+        userToken().clearToken();
+        return next("/loging");
+      }
+      // if(res===null){
+      //   userToken().clearToken();
+      //   return next("/loging");
+      // }
     }
-    // if(res===null){
-    //   userToken().clearToken();
-    //   return next("/loging");
-    // }
-  }
-
-    return next();
   }
 
 }

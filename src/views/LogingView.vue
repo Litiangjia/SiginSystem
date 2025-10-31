@@ -19,7 +19,7 @@
       </div>
 
       <div class="margin-top-2">
-        <button class="btn margin-top-2 float-left col-sm-24" type="submit">登录</button>
+        <button class="btn1 margin-top-2 float-left col-sm-24" type="submit">登录</button>
         <button class="btn2 margin-top-1 float-right col-sm-24">忘记密码</button>
       </div>
     </form>

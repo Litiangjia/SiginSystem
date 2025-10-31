@@ -10,7 +10,7 @@
   margin: 0;
 }
 .left-nav-li{
-  padding: 1em 1em;
+
   margin-bottom: 0.5em;
   background: linear-gradient(135deg, #e2e2e2 0%, #a7d5f0 100%);
   box-sizing: border-box;
@@ -18,6 +18,17 @@
   border-bottom: 1px solid #f0f0f0;
   cursor: pointer;
   transition: background 0.2s;
+  a{
+    padding: 1em 1em;
+    box-sizing: border-box;
+    display: block;
+    color:none;
+    width: 100%;
+    height: 100%;
+    &:active{
+      color:black;
+    }
+  }
 }
 .left-nav-li:hover{
   background: linear-gradient(135deg, #626262 0%, #39baff 100%);
@@ -118,7 +129,11 @@
     font-size: 1.2em;
     padding: 1.2em 1em;
     margin-bottom: 1em;
-    background:none;
+    a{
+      color:none;
+      width: 100%;
+      height: 100%;
+    }
   }
 
   .navActive{
