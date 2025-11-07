@@ -161,6 +161,76 @@
   transform: scale(0.98);
 }
 
+//btn5 按钮样式5
+/* 查看信息按钮：btn5（信息查看风格） */
+.btn5 {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55em 1em;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #2c3e50;
+  background: rgba(255, 255, 255, 0.96);
+  border: 2px solid #3498db;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.12);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* 信息图标（伪元素） */
+.btn5::before {
+  content: "ℹ";
+  display: inline-block;
+  font-size: 1rem;
+  line-height: 1;
+  color: #3498db;
+}
+
+/* 悬停 / 焦点 / 激活态 */
+.btn5:hover,
+.btn5:focus {
+  background: linear-gradient(90deg, #3498db 0%, #2980b9 100%);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 6px 16px rgba(52, 152, 219, 0.2);
+  transform: translateY(-1px);
+}
+
+.btn5:hover::before,
+.btn5:focus::before {
+  color: #fff;
+}
+
+.btn5:active {
+  transform: scale(0.98);
+  box-shadow: 0 3px 8px rgba(52, 152, 219, 0.15);
+}
+
+/* 响应式适配 */
+@media all and (max-width: 576px) {
+  .btn5 {
+    padding: 0.45em 0.85em;
+    font-size: 0.9rem;
+    border-radius: 6px;
+  }
+
+  .btn5::before {
+    font-size: 0.95rem;
+  }
+}
+
+@media all and (max-width: 320px) {
+  .btn5 {
+    padding: 0.35em 0.7em;
+    font-size: 0.8rem;
+  }
+}
+
+
 
 // 设置按钮样式
 .settings-btn {

@@ -82,11 +82,11 @@
           </tbody>
           <tbody v-else>
             <template v-if=" classList.length > 0">
-              <tr class="expand-table-row" v-for="(item,index) in  classList" :key="index">
+              <tr @click="openWindows(item)" class="expand-table-row" v-for="(item,index) in  classList" :key="index">
                 <td v-if="item.className!=null">{{item.className}}</td>
                 <td v-if="item.classNumber!=null">{{item.classNumber===0?'未分班':'('+item.classNumber+')班'}}</td>
                 <td>
-                  <button class="expand-btn" @click="openWindows(item)">
+                  <button class="expand-btn">
                     {{ expandedRow === index ? '收起' : '展开' }}
                   </button>
                 </td>

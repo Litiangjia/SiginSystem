@@ -33,6 +33,55 @@ export interface Student {
   token: string;
   createTime: Date;  // 时间类型
 }
+//课程表接口规范
+export interface CourseTable{
+  courseTableId: number;
+  courseFkId: number;
+  classFkId: number;
+  weekDay: number;
+  courseScheduleFkId: number;
+  teacherFkId: number;
+  creadit: number;
+}
+
+//课程表名接口规范，是课程表的归类
+export interface CourseTableNames{
+  id: number;
+  courseTableName: string;
+  classFkId: number;
+}
+
+// 定义课程表行数据接口
+export interface CourseTableRow {
+  courseTableId?: number
+  courseFkId: number
+  teacherFkId: number
+  courseScheduleFkId?:number
+  credit: number
+  weekDay: number // 0-6 表示周一到周日
+  courseTableNameFkId:number
+}
+
+export interface WeekDay{  //星期数据
+  weekDay:number;
+  courseTableRows:CourseTableRow[];  //星期对应的课程表行数据
+}
+
+// //定义接口类型 表数据
+// export interface CourseTableData {
+//   weekDays:WeekDay[];  //课程表数据
+// }
+
+
+//定义教师接口规范
+export interface Teacher{
+  teacherId: number;
+  name: string;
+  gender: number;
+  age: number;
+  hireDate: Date;
+}
+
 
 
 

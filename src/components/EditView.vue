@@ -8,6 +8,57 @@
       </div>
 
       <div class="edit-view-content">
+        <form v-if="dataType==='teachers'" @submit.prevent="save">
+          <div class="form-group" v-for="(v,atr) in editableData" :key="atr">
+            <template v-if="atr!=='teacherId'">
+              <label>{{atr==='name'? '姓名'
+              :atr==='gender'? '性别'
+              :atr==='age'? '年龄'
+              :atr==='major'? '专业'
+              :atr==='active'? '激活状态'
+              :atr==='class'? '班级'
+              :atr==='phoneNumber'? '联系电话'
+              :atr==='email'? '邮箱'
+              :atr==='hireDate'? '入职时间'
+              :atr==='grade'? '年级'
+              :atr==='classId'? '班级Id'
+              :atr==='createTime'? '创建时间'
+              :atr==='avatarUrl'? '头像Url'
+              :atr}}
+              </label>
+
+              <select v-if="atr==='active'" id="active" v-model="editableData[atr]">
+                <option value="0">未激活(禁用)</option>
+                <option value="1">激活(启用)</option>
+              </select>
+
+              <select v-else-if="atr==='gender'" id="gender" v-model="editableData[atr]">
+                <option value="1">男</option>
+                <option value="2">女</option>
+                <option value="0">未知</option>
+              </select>
+<!--
+              <select v-else-if="atr==='grade'" id="grade" v-model="editableData[atr]">
+                <option value="1">一年级</option>
+                <option value="2">二年级</option>
+                <option value="3">三年级</option>
+                <option value="4">四年级</option>
+                <option value="5">五年级</option>
+                <option value="6">六年级</option>
+              </select> -->
+
+              <input
+                v-else
+                :id="atr as string"
+                v-model="editableData[atr]"
+                :type="atr==='age'? 'number' : atr==='hireDate'? 'date' : atr==='phoneNumber'? 'tel' : 'text'"
+                required
+              />
+            </template>
+            <!-- {{atr}} -->
+          </div>
+        </form>
+
 
          <form v-if="dataType==='student'" @submit.prevent="save">
           <div class="form-group" v-for="(v,atr) in editableData" :key="atr">

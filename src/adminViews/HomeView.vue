@@ -25,9 +25,6 @@
             <li v-else>
               <router-link :to="menu.url||'# '" class="nav-link" @click="menu.name==='退出'?adminOut():''">{{menu.name}}</router-link>
             </li>
-
-
-
         </template>
       </ul>
 

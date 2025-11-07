@@ -44,6 +44,41 @@
             <!-- {{atr}} -->
           </div>
         </form>
+
+        <form v-else-if="dataType==='teachers'" @submit.prevent="add">
+          <div class="form-group" v-for="(v,atr) in Data" :key="atr">
+            <label>{{atr==='name'? '教师姓名'
+            :atr==='gender'? '性别'
+            :atr==='age'? '年龄'
+            // :atr==='major'? '专业'
+            // :atr==='active'? '激活状态'
+            // :atr==='phoneNumber'? '联系电话'
+            // :atr==='email'? '邮箱'
+            :atr==='hireDate'? '入职时间'
+            :atr}}</label>
+
+            <!-- <select v-if="atr==='active'" id="active" v-model="Data[atr]">
+              <option value="0">未激活(禁用)</option>
+              <option value="1">激活(启用)</option>
+            </select> -->
+
+            <select v-if="atr==='gender'" id="gender" v-model="Data[atr]">
+              <option value="1">男</option>
+              <option value="2">女</option>
+              <option value="0">未知</option>
+            </select>
+
+             <input
+              v-else
+              :id="atr"
+              v-model="Data[atr]"
+              :type="atr==='age'? 'number' : atr==='hireDate'? 'date' : atr==='phoneNumber'? 'tel' : 'text'"
+              required
+            />
+            <!-- {{atr}} -->
+          </div>
+        </form>
+
         <form v-else-if="dataType==='course'" @submit.prevent="add">
           <div class="form-group" v-for="(v,atr) in Data" :key="atr">
             <label :for="atr">{{atr==='courseName'? '课程名称'
@@ -135,6 +170,19 @@
             />
           </div>
         </form>
+
+        <form v-else-if="dataType==='courseTableNames'" @submit.prevent="add">
+          <div class="form-group" v-for="(v,atr) in Data" :key="atr">
+            <label :for="atr">{{atr==='courseTableName'? '课程表名称'
+            :atr}}</label>
+            <input
+              :id="atr"
+              v-model="Data[atr]"
+              type="text"
+              required
+            />
+          </div>
+        </form>
       </div>
 
       <div class="add-view-footer">
@@ -179,7 +227,7 @@ if(props.dataType === 'student'){
      courseName: '',
    });
 }else if(props.dataType === 'classes'){
-   Data = ref({
+  Data = ref({
   className: '',
   classNumber: 1,
   grade:1
@@ -189,6 +237,17 @@ if(props.dataType === 'student'){
     startTime: '00:00:00',
     endTime: '00:00:00',
     numberOfLessons:0,
+  });
+}else if(props.dataType === 'courseTableNames'){
+  Data = ref({
+   courseTableName:''
+  });
+}else if(props.dataType === 'teachers'){
+  Data = ref({
+    name: '',
+    gender: '',
+    age: 0,
+    hireDate: '',
   });
 }
 

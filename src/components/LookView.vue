@@ -86,6 +86,39 @@
           </div>
         </div>
 
+        <!-- 教师数据 -->
+        <div class="look-info" v-if="dataType==='teachers'">
+          <div class="info-row" v-for="(v,atr) in Data" :key="atr">
+            <span class="label">
+              {{ atr==='teacherId'?'Id'
+              :atr==='name'?'教师名称'
+              :atr==='age'?'年龄'
+              :atr==='classId'?'班级Id'
+              :atr==='phoneNumber'?'手机号'
+              :atr==='email'?'邮箱'
+              :atr==='enrollmentDate'?'入学时间'
+              :atr==='avatar'?'头像'
+              :atr==='major'?'专业'
+              :atr==='gender'?'性别'
+              :atr==='studentNumber'?'学号'
+              :atr==='grade'?'年级'
+              :atr==='active'?'是否激活'
+              :atr==='createTime'?'创建时间'
+              :atr==='hireDate'?'入职时间'
+              :atr==='studentPassword'?'密码'
+              :atr==='avatarUrl'?'头像Url'
+              :atr
+              }}
+            </span>
+            <span class="value">
+              {{atr==='active'?v==1?'激活':'未激活'
+                :atr==='gender'?v==1?'男':v==2?'女':'未知':v
+              }}
+            </span>
+          </div>
+
+        </div>
+
       </div>
 
       <div class="look-view-footer">

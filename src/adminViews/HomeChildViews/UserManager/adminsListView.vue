@@ -1,7 +1,7 @@
 <template>
   <div class=" $ TM_FILENAME_BASE $ ">
     <!-- 编写你的html 代码 -->
-     sdfdsfsdfdsf
+     管理员列表
   </div>
 </template>
 

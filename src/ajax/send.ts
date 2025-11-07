@@ -83,15 +83,17 @@ request.interceptors.response.use(
     } else {
       //特殊token错误处理 500，401错误处理
       if(data.code === 500){
-        D.error('用户登录已过期，请重新登录');
+
         //后端错误处理
         if(data.msg.includes('admin')){
+           D.error('用户登录已过期，请重新登录');
           adminToken().clearToken();
           //跳转登录页面
-          router.push({path: '/admin/loging'});
+          router.push({path:'/admin/loging'});
         }
 
         if(data.msg.includes('user')){
+           D.error('用户登录已过期，请重新登录');
           userToken().clearToken();
           //跳转登录页面
           router.push({path: '/loging'});

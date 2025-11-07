@@ -5,19 +5,15 @@
 </template>
 
 <script setup  lang="ts">
-
-
-//测试请求接口
-import { http } from '@/ajax/send'
+// import { ref } from "vue"
+import { http } from "./ajax/send";
 
 http.get('/admin/courseTableData/get').then(res => {
-  console.log(res)
-}).catch(err => {
-  console.log(err)
-})
+   console.log(res);
+});
 
 
- //编写代码
+
 </script>
 
 <style scoped>

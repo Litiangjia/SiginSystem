@@ -171,6 +171,8 @@ routerPages = [
 routerPages.push(...pages);
 routerPages.push(...adminPages);
 
+console.log(adminPages);
+
 
 
 

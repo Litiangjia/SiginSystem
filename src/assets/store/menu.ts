@@ -20,14 +20,15 @@ export const menu = defineStore('menu-store', {
         ]},
         {root:true,name:"用户管理",childrenActive:false,children:[
           {name:"学生列表",url:"/admin/usermanager/userlist"},
-          {name:"教师列表",url:"/admin/usermanager/teacherlist"},
+          {name:"教师列表",url:"/admin/usermanager/teacherslist"},
+          {name:"管理员列表",url:"/admin/usermanager/adminslist"},
           {name:"信息绑定",url:"/admin/userbind"},
         ]},
         {root:true,name:"数据管理",childrenActive:false,children:[
           {name:"课程数据",url:"/admin/datamanager/coursedata"},
           {name:"班级",url:"/admin/datamanager/classdata"},
           {name:"课程节数",url:"/admin/datamanager/coursescheduledata"},
-          {name:"课程表",url:"/admin/datamanager/coursetable"},
+          {name:"课程表",url:"/admin/datamanager/coursetabledata"},
         ]},
         {name:"系统设置",url:"/admin"},
         {name:"退出",url:"#"},
